@@ -1,3 +1,7 @@
+import stops1 from "./stops-1.json";
+import stops2 from "./stops-2.json";
+import stops3 from "./stops-3.json";
+
 export type StopKind =
   | "depart"
   | "traversee"
@@ -48,6 +52,21 @@ export const CERTAINTY_LABEL: Record<Certainty, string> = {
   debattu: "Identification débattue",
 };
 
+export const KIND_HINT: Record<StopKind, string> = {
+  depart: "Mise en route de l'expédition",
+  traversee: "Marche ou navigation de liaison",
+  construction: "Chantier naval, réparation",
+  epreuve: "Faim, maladie, piège naturel",
+  rencontre: "Accueil ou contact riverain",
+  combat: "Affrontement armé",
+  geographie: "Repère hydrographique nommé",
+  arrivee: "Terminus de la descente",
+};
+
+/**
+ * Polyline following the Andes → Coca → Napo → Amazone → côte des Guyanes → Cubagua.
+ * Positions are [lat, lng]. Dense enough to hug the river at mid zooms.
+ */
 export const ROUTE: [number, number][] = [
   [-0.2201, -78.5123], [-0.28, -78.15], [-0.4, -77.9], [-0.541, -77.626],
   [-0.5, -77.3], [-0.4626, -76.9869], [-0.55, -76.55], [-0.62, -76.2],
@@ -68,7 +87,7 @@ export const ROUTE: [number, number][] = [
   [10.55, -63.15], [10.819, -64.183],
 ];
 
-export const STOPS: ExpeditionStop[] = JSON.parse(`PLACEHOLDER`);
+export const STOPS = [...stops1, ...stops2, ...stops3] as ExpeditionStop[];
 
 export function routeUntil(routeIndex: number): [number, number][] {
   const end = Math.min(Math.max(routeIndex, 0) + 1, ROUTE.length);
